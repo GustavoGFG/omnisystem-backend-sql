@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id          Int       @id @default(autoincrement())
+  full_name   String
+  hire_date   DateTime
+  resign_date DateTime?
+  cpf         String    @unique
+  image       String?
+  password    String?
+  role        Role      @default(Cashier)
+  Mistake     Mistake[]
+  Sale        Sale[]
+}
+
+model Sale_goal {
+  id                  Int      @id @default(autoincrement())
+  date                DateTime @unique @default(now())
+  value_goal          Float
+  transaction_goal    Int
+  food_attach_goal    Float    @default(0.7)
+  addons_goal         Float    @default(0.1)
+  updated_at          DateTime @default(now()) @updatedAt
+}
+
+model Sale {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  value       Float
+  transaction Int
+  addons      Float
+  food_attach Float
+  employee_id Int
+  updated_at  DateTime @default(now()) @updatedAt
+  employee    Employee @relation(fields: [employee_id], references: [id])
+}
+
+model Mistake {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  value       Float
+  reason      String
+  employee_id Int
+  receipt     String   @unique
+  updated_at  DateTime @default(now()) @updatedAt
+  employee    Employee @relation(fields: [employee_id], references: [id])
+}
+
+
+
+enum Role {
+  Cashier
+  Coordinator
+  Manager
+}
