@@ -46,7 +46,13 @@ export const addEmployeeService = async ({
     });
     return employee;
   } catch (error) {
-    console.error('Error creating employee:', error);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        throw new Error('There is a unique constraint violation');
+      }
+    } else {
+      throw error;
+    }
     return null;
   }
 };

@@ -71,11 +71,15 @@ export const addEmployee: RequestHandler = async (req, res) => {
         .status(500)
         .json({ success: false, error: 'Failed to add employee' });
     }
-  } catch (error) {
-    console.error('Error adding employee:', error);
+  } catch (error: any) {
+    if (error.message === 'There is a unique constraint violation') {
+      return res.status(400).json({ success: false, error: error.message });
+    }
     return res
       .status(500)
       .json({ success: false, error: 'Internal Server Error' });
+
+    //
   }
 };
 
