@@ -24,6 +24,7 @@ router.post('/login', auth.login);
 
 // EMPLOYEE
 router.get('/employee', employees.getAll);
+router.get('/employeedata', employees.getAllEmployeeData);
 router.get('/employee/:id', employees.getEmployee);
 router.post('/employee', privateRoute, employees.addEmployee);
 router.put('/employee/:id', employees.updateEmployee);

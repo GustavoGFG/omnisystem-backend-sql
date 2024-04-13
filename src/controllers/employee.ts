@@ -21,6 +21,15 @@ export const getAll: RequestHandler = async (req, res) => {
   }
 };
 
+export const getAllEmployeeData: RequestHandler = async (req, res) => {
+  console.log('entrou');
+  try {
+    const employeesData = await employeeService.getAllData();
+    if (employeesData)
+      return res.status(200).json({ success: true, data: employeesData });
+  } catch (error: any) {}
+};
+
 export const getEmployee: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,6 +65,7 @@ export const addEmployee: RequestHandler = async (req, res) => {
   const hire_date = new Date(req.body.hire_date); // Convert hire_date string to Date object
 
   const body = addEmployeeSchema.safeParse({ full_name, cpf, hire_date, role });
+
   if (!body.success) {
     return res
       .status(400)

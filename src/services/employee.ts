@@ -13,6 +13,15 @@ export const getAllEmployeeService = async () => {
   }
 };
 
+export const getAllData = async () => {
+  return await prisma.employee.findMany({
+    include: {
+      Sale: true,
+      Mistake: true,
+    },
+  });
+};
+
 export const getEmployeeService = async (id: number) => {
   try {
     const employee = await prisma.employee.findFirst({ where: { id } });
