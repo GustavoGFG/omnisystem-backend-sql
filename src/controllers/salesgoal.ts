@@ -51,6 +51,7 @@ export const getSaleGoal: RequestHandler = async (req, res) => {
 };
 
 export const addSaleGoal: RequestHandler = async (req, res) => {
+  console.log('body: ', req.body);
   const addSaleGoalSchema = z.object({
     date: z.date(),
     value_goal: z.number().min(1, 'Deve ser no mínimo 1'),
@@ -68,7 +69,7 @@ export const addSaleGoal: RequestHandler = async (req, res) => {
   const { value_goal, transaction_goal, food_attach_goal, addons_goal } =
     req.body;
   const date = new Date(req.body.date);
-
+  console.log(date);
   const body = addSaleGoalSchema.safeParse({
     date,
     value_goal,

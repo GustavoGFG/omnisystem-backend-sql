@@ -33,7 +33,7 @@ router.delete('/employee/:id', employees.deleteEmployee);
 // SALE GOAL
 router.get('/salesgoal', salesgoal.getAll);
 router.get('/salesgoal/:saledate', salesgoal.getSaleGoal);
-router.post('/salesgoal', salesgoal.addSaleGoal);
+router.post('/salesgoal', privateRoute, salesgoal.addSaleGoal);
 router.put('/salesgoal/:saledate', salesgoal.updateSaleGoal);
 router.delete('/salesgoal/:saledate', salesgoal.deleteSaleGoal);
 
