@@ -49,7 +49,7 @@ router.get('/dailysale', dailysales.getAll);
 router.get('/dailysale/:id', dailysales.getOne);
 router.post('/dailysale', dailysales.add);
 router.post('/dailysales', dailysales.addMany);
-router.post('/upsertsales', dailysales.upsertMany);
+router.post('/upsertsales', privateRoute, dailysales.upsertMany);
 router.put('/dailysale/:id', dailysales.update);
 
 router.delete('/dailysale/:id', dailysales.remove);
@@ -58,7 +58,7 @@ router.delete('/dailysale/:id', dailysales.remove);
 router.get('/mistake', mistake.getAll);
 router.get('/mistake/:id', mistake.getOne);
 router.post('/mistake/', mistake.add);
-router.post('/upsertmistakes', mistake.upsertMany);
+router.post('/upsertmistakes', privateRoute, mistake.upsertMany);
 router.put('/mistake/:id', mistake.update);
 router.delete('/mistake/:id', mistake.remove);
 

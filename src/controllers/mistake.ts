@@ -88,7 +88,7 @@ export const upsertMany: RequestHandler = async (req, res) => {
   const upsertManySchema = z.object({
     id: z.number(),
     date: z.date(),
-    value: z.number().min(1),
+    value: z.number(),
     reason: z.string(),
     employee_id: z.number(),
     receipt: z.string(),
