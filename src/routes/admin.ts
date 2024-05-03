@@ -34,6 +34,7 @@ router.delete('/employee/:id', employees.deleteEmployee);
 router.get('/salesgoal', salesgoal.getAll);
 router.get('/salesgoal/:saledate', salesgoal.getSaleGoal);
 router.post('/salesgoal', privateRoute, salesgoal.addSaleGoal);
+router.post('/salesgoals', privateRoute, salesgoal.addMany);
 router.put('/salesgoal/:saledate', salesgoal.updateSaleGoal);
 router.delete('/salesgoal/:saledate', salesgoal.deleteSaleGoal);
 

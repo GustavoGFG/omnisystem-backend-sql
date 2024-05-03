@@ -57,6 +57,32 @@ export const add = async ({
     return null;
   }
 };
+//
+//
+// export const addMany = async (goalArray: Prisma.SaleCreateManyInput[]) => {
+export const addMany = async (goalArray: Prisma.Sale_goalCreateManyInput[]) => {
+  try {
+    const goals = await prisma.sale_goal.createMany({ data: goalArray });
+
+    return goals;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        throw new Error('There is a unique constraint violation');
+      }
+      if (error.code === 'P2025' || error.code === 'P2003') {
+        throw new Error('Employee not found');
+      }
+    } else {
+      throw error;
+    }
+    return null;
+  }
+};
+//
+//
+
 type updateSalesGoalsProps = {
   date_params: Date;
   date?: Date;

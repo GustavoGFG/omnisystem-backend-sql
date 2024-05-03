@@ -100,7 +100,80 @@ export const addSaleGoal: RequestHandler = async (req, res) => {
       .json({ success: false, error: 'Internal Server Error' });
   }
 };
+//
 
+type addGoalProp = {
+  date: string;
+  value_goal: number;
+  transaction_goal: number;
+  food_attach_goal: number;
+  addons_goal: number;
+};
+//
+//
+const addSaleGoalSchema = z.object({
+  date: z.date(),
+  value_goal: z.number().min(1, 'Deve ser no mínimo 1'),
+  transaction_goal: z.number().min(1, 'Deve ser no mínimo 1'),
+  food_attach_goal: z
+    .number()
+    .min(0, 'Deve ser no mínimo 0')
+    .max(1, 'Dever ser no máximo 1'),
+  addons_goal: z
+    .number()
+    .min(0, 'Deve ser no mínimo 0')
+    .max(1, 'Dever ser no máximo 1'),
+});
+//
+//
+export const addMany: RequestHandler = async (req, res) => {
+  const addSaleGoalSchema = z.object({
+    date: z.date(),
+    value_goal: z.number().min(1, 'Deve ser no mínimo 1'),
+    transaction_goal: z.number().min(1, 'Deve ser no mínimo 1'),
+    food_attach_goal: z
+      .number()
+      .min(0, 'Deve ser no mínimo 0')
+      .max(1, 'Dever ser no máximo 1'),
+    addons_goal: z
+      .number()
+      .min(0, 'Deve ser no mínimo 0')
+      .max(1, 'Dever ser no máximo 1'),
+  });
+
+  const arraySchema = z.array(addSaleGoalSchema);
+
+  let newReqBody = req.body.map((sale: addGoalProp) => {
+    return {
+      date: sale.date ? new Date(sale.date) : sale.date,
+      value_goal: sale.value_goal,
+      transaction_goal: sale.transaction_goal,
+      food_attach_goal: sale.food_attach_goal,
+      addons_goal: sale.addons_goal,
+    };
+  });
+  const body = arraySchema.safeParse(newReqBody);
+  if (!body.success)
+    return res
+      .status(400)
+      .json({ success: false, error: 'Invalid data', details: body.error });
+
+  try {
+    const goals = await salesGoalService.addMany(body.data);
+    if (goals) return res.status(201).json({ success: true, data: goals });
+  } catch (error: any) {
+    if (
+      error.message === 'There is a unique constraint violation' ||
+      error.message === 'Employee not found'
+    ) {
+      return res.status(400).json({ success: false, error: error.message });
+    }
+    return res
+      .status(500)
+      .json({ success: false, error: 'Internal Server Error' });
+  }
+};
+//
 export const updateSaleGoal: RequestHandler = async (req, res) => {
   try {
     const { saledate } = req.params;

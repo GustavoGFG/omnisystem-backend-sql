@@ -14,12 +14,18 @@ model Employee {
   resign_date DateTime?
   cpf         String    @unique
   image       String?
-  password    String?
   role        Role      @default(Cashier)
   Mistake     Mistake[]
   Sale        Sale[]
+  password    Employee_password?
 }
 
+model Employee_password {
+  id        Int      @id @default(autoincrement())
+  password  String
+  employee  Employee @relation(fields: [employeeId], references: [id])
+  employeeId Int     @unique
+}
 model Sale_goal {
   id                  Int      @id @default(autoincrement())
   date                DateTime @unique @default(now())
@@ -48,7 +54,7 @@ model Mistake {
   value       Float
   reason      String
   employee_id Int
-  receipt     String   @unique
+  receipt     String
   updated_at  DateTime @default(now()) @updatedAt
   employee    Employee @relation(fields: [employee_id], references: [id])
 }

@@ -21,7 +21,7 @@ export const signup: RequestHandler = async (req, res) => {
 
   try {
     const response = await auth.signupService(body.data);
-    res.status(200).json({ employee: response.employee });
+    res.status(200).json({ token: response.token });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
