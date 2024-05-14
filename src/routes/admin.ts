@@ -27,16 +27,16 @@ router.get('/employee', employees.getAll);
 router.get('/employeedata', employees.getAllEmployeeData);
 router.get('/employee/:id', employees.getEmployee);
 router.post('/employee', privateRoute, employees.addEmployee);
-router.put('/employee/:id', employees.updateEmployee);
-router.delete('/employee/:id', employees.deleteEmployee);
+router.put('/employee/:id', privateRoute, employees.updateEmployee);
+router.delete('/employee/:id', privateRoute, employees.deleteEmployee);
 
 // SALE GOAL
 router.get('/salesgoal', salesgoal.getAll);
 router.get('/salesgoal/:saledate', salesgoal.getSaleGoal);
 router.post('/salesgoal', privateRoute, salesgoal.addSaleGoal);
 router.post('/salesgoals', privateRoute, salesgoal.addMany);
-router.put('/salesgoal/:saledate', salesgoal.updateSaleGoal);
-router.delete('/salesgoal/:saledate', salesgoal.deleteSaleGoal);
+router.put('/salesgoal/:saledate', privateRoute, salesgoal.updateSaleGoal);
+router.delete('/salesgoal/:saledate', privateRoute, salesgoal.deleteSaleGoal);
 
 // DAILY SALE
 router.get('/dailysale', dailysales.getAll);
@@ -48,19 +48,19 @@ router.get('/dailysale', dailysales.getAll);
 // router.get('/dailysale/:day', dailysales.getOne);
 //
 router.get('/dailysale/:id', dailysales.getOne);
-router.post('/dailysale', dailysales.add);
-router.post('/dailysales', dailysales.addMany);
+router.post('/dailysale', privateRoute, dailysales.add);
+router.post('/dailysales', privateRoute, dailysales.addMany);
 router.post('/upsertsales', privateRoute, dailysales.upsertMany);
-router.put('/dailysale/:id', dailysales.update);
+router.put('/dailysale/:id', privateRoute, dailysales.update);
 
-router.delete('/dailysale/:id', dailysales.remove);
+router.delete('/dailysale/:id', privateRoute, dailysales.remove);
 
 // MISTAKE
 router.get('/mistake', mistake.getAll);
 router.get('/mistake/:id', mistake.getOne);
-router.post('/mistake/', mistake.add);
+router.post('/mistake/', privateRoute, mistake.add);
 router.post('/upsertmistakes', privateRoute, mistake.upsertMany);
-router.put('/mistake/:id', mistake.update);
-router.delete('/mistake/:id', mistake.remove);
+router.put('/mistake/:id', privateRoute, mistake.update);
+router.delete('/mistake/:id', privateRoute, mistake.remove);
 
 export default router;
